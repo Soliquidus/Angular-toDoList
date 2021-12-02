@@ -1,0 +1,8 @@
+<p *ngIf="!todo">{{error}}</p>
+<button type="button" class="btn btn-primary" routerLink="/todos">Retour</button>
+<div *ngIf="todo" class="card" style="width: 18rem;">
+  <img class="card-img-top" [src]="todo.image" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{todo.todoName}}</h5>
+  </div>
+</div>
