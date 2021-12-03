@@ -2,36 +2,36 @@
 <p>Nous sommes le {{date | date: 'dd/MM/yyyy'}}</p>
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let todo of todos, let i = index">
-    <div [ngClass]="{encours:todo.todoStatus,termine:!todo.todoStatus}">
+    <div [ngClass]="{encours:todo.status,termine:!todo.status}">
       <a [href]="todo.image">
         <img [src]="todo.image" alt=""/>
       </a>
 
-      {{todo.todoName | uppercase}}
+      {{todo.name | uppercase}}
 
-      <button class="btn btn-primary" [disabled]="todo.todoStatus"
+      <button class="btn btn-primary" [disabled]="todo.status"
               (click)="onChangeStatus(i)"
       >En cours
       </button>
-      <button class="btn btn-success" [disabled]="!todo.todoStatus"
+      <button class="btn btn-success" [disabled]="!todo.status"
               (click)="onChangeStatus(i)"
       >Terminé
       </button>
 
       <!-- Action de modification -->
       <button class="btn btn-danger" (click)="onChangeIsModif(i)"
-              *ngIf="!todo.isModif"
+              *ngIf="!todo.changed"
       >Modifier
       </button>
       <button class="btn btn-success" (click)="onChangeIsModif(i)"
-              *ngIf="todo.isModif"
+              *ngIf="todo.changed"
       >Modification terminée
       </button>
       <button class="btn btn-success mr-1" (click)="onView(i)"
       >En savoir plus
       </button>
 
-      <input *ngIf="todo.isModif" class="form-control" [(ngModel)]="todo.todoName"/>
+      <input *ngIf="todo.changed" class="form-control" [(ngModel)]="todo.name"/>
     </div>
   </li>
 </ul>

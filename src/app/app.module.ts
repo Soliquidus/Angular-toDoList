@@ -17,7 +17,7 @@ export const ROUTES: Routes = [
   {path: 'not-found', component: NotFoundComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'single-todo/:id', component: SingleTodoComponent},
-  {path: '', component: HomeComponent},
+  {path: '', component: TodoComponent},
   {path: '**', pathMatch: 'full', redirectTo: 'not-found'},
 ];
 

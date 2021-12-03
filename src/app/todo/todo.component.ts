@@ -18,7 +18,10 @@ export class TodoComponent implements OnInit {
 
   ngOnInit() {
     this.date = this.todoService.date
-    this.todos = this.todoService.todos
+    // Pour gérer l'asynchrone
+    this.todoService.todos
+      .then((todosFetch: any) => this.todos = todosFetch)
+      .catch((error: any) => console.log("Erreur : " + error));
   }
 
   onChangeStatus(i: number) {
