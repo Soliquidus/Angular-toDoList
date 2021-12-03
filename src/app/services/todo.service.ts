@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Subject} from "rxjs";
+import {Todo} from "../models/todo.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
   date = new Date();
-  todos: any = [];
+  todos: any = Todo;
   todosSubject = new Subject<any[]>();
 
   // Simuler du fetching pour utiliser l'asynchrone
@@ -54,14 +55,18 @@ export class TodoService {
     }, 3000);
   }
 
+  public emitTodos() {
+    this.todosSubject.next(this.todos);
+  }
+
   onChangeStatus(i: number) {
     this.todos[i].status = !this.todos[i].status;
-    this.emitTodos()
+    this.emitTodos();
   }
 
   onChangeIsModif(i: number) {
     this.todos[i].changed = !this.todos[i].changed
-    this.emitTodos()
+    this.emitTodos();
   }
 
   getTodo(index: number) {
@@ -71,7 +76,9 @@ export class TodoService {
     return false
   }
 
-  public emitTodos() {
-    this.todosSubject.next(this.todos);
+  addTodo(todo: Todo): void {
+    this.todos.unshift(todo);
+    this.emitTodos();
   }
+
 }
