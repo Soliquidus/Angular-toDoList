@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -6,12 +7,12 @@ import {Injectable} from '@angular/core';
 export class TodoService {
   date = new Date();
   todos: any = [];
-  todoSlice: any = [];
+  todosSubject = new Subject<any[]>();
 
   // Simuler du fetching pour utiliser l'asynchrone
   constructor() {
-    this.todos = new Promise((resolve, reject) => {
-      const data = [
+    setTimeout(() => {
+      this.todos = [
         {
           name: "Projet 1",
           status: true,
@@ -49,29 +50,28 @@ export class TodoService {
             "Voluptatum urna convallis, animi leo, diam atque aptent vero."
         },
       ];
-      if (data.length) {
-        setTimeout(() => {
-          this.todoSlice = data;
-          resolve(data);
-        }, 2000)
-      } else {
-        reject("Pas de données disponibles sur le serveur")
-      }
-    });
+      this.emitTodos();
+    }, 3000);
   }
 
   onChangeStatus(i: number) {
-    this.todoSlice[i].status = !this.todoSlice[i].status;
+    this.todos[i].status = !this.todos[i].status;
+    this.emitTodos()
   }
 
   onChangeIsModif(i: number) {
-    this.todoSlice[i].changed = !this.todoSlice[i].changed
+    this.todos[i].changed = !this.todos[i].changed
+    this.emitTodos()
   }
 
   getTodo(index: number) {
-    if (this.todoSlice[index]) {
-      return this.todoSlice[index]
+    if (this.todos[index]) {
+      return this.todos[index]
     }
     return false
+  }
+
+  public emitTodos() {
+    this.todosSubject.next(this.todos);
   }
 }
