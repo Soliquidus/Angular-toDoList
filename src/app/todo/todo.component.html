@@ -7,13 +7,13 @@
         <img [src]="todo.image" alt=""/>
       </a>
 
-      {{todo.name | uppercase}}
+      {{todo.name}}
 
-      <button class="btn btn-primary" [disabled]="todo.status"
+      <button class="btn btn-primary" [disabled]="!todo.status"
               (click)="onChangeStatus(i)"
       >En cours
       </button>
-      <button class="btn btn-success" [disabled]="!todo.status"
+      <button class="btn btn-success" [disabled]="todo.status"
               (click)="onChangeStatus(i)"
       >Terminé
       </button>
